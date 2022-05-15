@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- Content Header (Page header) -->
+ <div class="content-header">
+   <div class="container-fluid">
+     <div class="row mb-2">
+       <div class="col-sm-6">
+         <h1 class="m-0 text-dark">Detail</h1>
+       </div><!-- /.col -->
+     </div><!-- /.row -->
+   </div><!-- /.container-fluid -->
+ </div>
+ <hr>
+ <table>
+   <div class="row">
+     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-preview">
+                <h2 class="post-title">
+                  <tr>
+                    <th width=200><h4>受審者</h4></th>
+                    <th><a href="#"><h2> {{ object.testee.testee_name }} </h2></a></th>
+                  </tr>
+                  <tr>
+                    <th><h4>採点者１</h4></th>
+                    <th><h2>{{ object.score1 }}</h2></th>
+                  </tr>
+                  <tr>
+                    <th><h4>採点者２</h4></th>
+                    <th><h2>{{ object.score2 }}</h2></th>
+                  </tr>
+                  <tr>
+                    <th><h4>採点者３</h4></th>
+                    <th><h2>{{ object.score3 }}</h2></th>
+                  </tr>
+                  <tr>
+                    <th><h4>採点者４</h4></th>
+                    <th><h2>{{ object.score4 }}</h2></th>
+                  </tr>
+                  <tr>
+                    <th><h4>採点者５</h4></th>
+                    <th><h2>{{ object.score5 }}</h2></th>
+                  </tr>
+                  <tr>
+                    <th><h4>筆記得点</h4></th>
+                    <th><h2>{{ object.written_points }}</h2></th>
+                  </tr>
+                  <tr>
+                    <th><h4>イベント名</h4></th>
+                    <th><h2>{{ object.events }}</h2></th>
+                  </tr>
+                </h2>
+           <!--- <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 24, 2014</p> -->
+        </div>
+      </div>
+    </div>
+ </table>
+{% endblock %}

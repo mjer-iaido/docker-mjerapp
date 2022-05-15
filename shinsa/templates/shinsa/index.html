@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block body %}
+<style>
+    @page {
+        size: landscape;
+        margin: 0.2in 0.1in 0.2in 0.1in;
+    }
+    table tr span {
+	      white-space: nowrap;
+    }
+    table td span {
+        white-space: nowrap;
+    }
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <h1 class="m-0 text-dark">Dashboard</h1>
+</div>
+<hr>
+<!-- ============================== ここから以下を追加 ============================== -->
+<!-- Main content -->
+<section class="content">
+  {% if user.is_authenticated %}
+    <table style="font-size: 1.0rem;" width="100%" class="table table-striped table-bordered table-hover">
+        <tr>
+          <th class="" width="25%" >
+                <a>Contents</a>
+            </th>
+            <th class="" width="50%" >
+                <a>Description</a>
+            </th>
+            <th class="" width="25%" >
+                <a>Link</a>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <h2>管理画面</h2>
+            </td>
+            <td>
+                <b>国際連盟・公認道場の下記会員情報の管理</b>
+                <li>会員登録・リスト表示</li>
+                <li>会員段位登録</li>
+            </td>
+            <td class="text-center">
+              <div class="small-box bg-blue">
+                  <div class="inner">
+                      <h4>管理画面</h4>
+                  </div>
+                  <div class="icon">
+                      <i class="ion ion-document"></i>
+                  </div>
+                  {% if user.is_authenticated %}
+                      <a href="country" class="small-box-footer">管理画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+                  {% else %}
+                      <a href="login" class="small-box-footer">login <i class="fa fa-arrow-circle-right"></i></a>
+                  {% endif %}
+              </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>採点表</h2>
+            </td>
+            <td>
+                <b>昇段審査・演武会採点表</b>
+                <li>審査員３〜５名用の採点表</li>
+                <li>受審者得点登録・合否結果判定</li>
+                <li>採点表PDF出力</li>
+            </td>
+            <td class="text-center">
+              <div class="small-box bg-blue">
+                  <div class="inner">
+                      <h4>採点表</h4>
+                  </div>
+                  <div class="icon">
+                      <i class="ion ion-document"></i>
+                  </div>
+                  {% if user.is_authenticated %}
+                      <a href="events" class="small-box-footer">採点表へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+                  {% else %}
+                      <a href="login" class="small-box-footer">login <i class="fa fa-arrow-circle-right"></i></a>
+                  {% endif %}
+              </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>行事登録</h2>
+            </td>
+            <td>
+                <b>昇段審査・演武会などの以下情報を登録</b>
+                <li>実施行事登録</li>
+                <li>実施行事採点者登録</li>
+            </td>
+            <td class="text-center">
+                <b>管理者のみ操作可能</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>公認道場登録</h2>
+            </td>
+            <td>
+                <b>国際連盟・公認道場を登録</b>
+                <li>所在国登録</li>
+                <li>道場名称・会員登録</li>
+            </td>
+            <td class="text-center">
+                <b>管理者のみ操作可能</b>
+            </td>
+        </tr>
+    </table>
+  {% else %}
+    <div class="col-lg-3 col-xs-6">
+          <div class="small-box bg-blue">
+              <div class="inner">
+                  <h4>Login</h4>
+                  <p></p>
+              </div>
+              <div class="icon">
+                  <i class="ion ion-document"></i>
+              </div>
+              <a href="login" class="small-box-footer">Go to login page <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+    </div>
+
+  {% endif %}
+<!--
+  <div class="row">
+      <div class="col-lg-3 col-xs-6">
+          <div class="small-box bg-aqua">
+              <div class="inner">
+                  <h4>admin</h4>
+                  <p>administrator page</p>
+              </div>
+              <div class="icon">
+                  <i class="ion ion-android-share"></i>
+              </div>
+              <a href="admin" class="small-box-footer">管理画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-xs-6">
+          <div class="small-box bg-aqua">
+              <div class="inner">
+                    <h4>PDFtoExcel</h4>
+                    <p>PDF→Excel変換</p>
+              </div>
+              <div class="icon">
+                  <i class="ion ion-android-share"></i>
+              </div>
+              <a href="#" class="small-box-footer">管理画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h4>受審者登録画面</h4>
+                    <p>審査受審者を登録する</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-document"></i>
+                </div>
+                <a href="create_testee" class="small-box-footer">登録画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h4>採点表作成</h4>
+                    <p>採点表を登録する</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-document"></i>
+                </div>
+                <a href="scoringsheet_form" class="small-box-footer">採点表登録画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h4>イベント</h4>
+                    <p>イベント一覧を表示する</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-document"></i>
+                </div>
+                <a href="events" class="small-box-footer">イベント選択画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+-->
+
+</section>
+{% endblock %}

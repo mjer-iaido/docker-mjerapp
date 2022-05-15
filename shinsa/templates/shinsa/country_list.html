@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="container">
+    <h1>Select the country</h1>
+    <a href="/">
+        <button class="btn btn-default">戻る</button>
+    </a>
+    <table style="font-size: 1.2rem; width="100%" class="table table-striped table-bordered table-hover">
+        <hr>
+          <thead>
+            <tr>
+                <th class="text-center" width="5%" >
+                    <h3>NO</h3>
+                </th>
+                <th class="text-center" width="35%" >
+                    <h3>country</h3>
+                </th>
+                <th class="text-center" width="30%" >
+                    <h3>Dojos</h3>
+                </th>
+                <th class="text-center" width="30%" >
+                    <h3></h3>
+                </th>
+            </tr>
+            {% for country in object_list %}
+            <tr>
+                <td class="text-center">
+                    {{ forloop.counter }}
+                </td>
+                <td class="text-center">
+                    {{ country }}
+                </td>
+                <td class="text-center">
+                    <a href="{% url 'dojos' %}?country={{ country.id }}">
+                        <button class="btn btn-primary">go to 道場一覧</button>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a href="#">
+                        <button class="btn btn-danger">button</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </thead>
+    </table>
+  </div>
+{% endblock %}

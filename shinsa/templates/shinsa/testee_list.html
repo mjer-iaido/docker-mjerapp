@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block body %}
+<style>
+  @page {
+      size: landscape;
+      margin: 0.2in 0.1in 0.2in 0.1in;
+  }
+  table th span {
+	    white-space: nowrap;
+  }
+  table td span {
+      white-space: nowrap;
+  }
+  .fontred {
+      color: red;
+      text-align: center;
+  }
+</style>
+
+    <h1>Members List</h1>
+
+    {% for testee in object_list|slice:":1" %}
+        <h3> Selected Dojo is {{ dojos.dojo_number }} : {{ testee.dojo.dojo_name_eng }}</h3><br>
+        <a href="{% url 'create_testee' testee.dojo.dojo_number %}?dojo={{ testee.dojo.id }}" target="_blank">
+            <button class="btn btn-primary">会員登録</button>
+        </a>
+        <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+    {% endfor %}
+
+    <table style="font-size: 0.9rem;" width="" class="table table-striped table-bordered table-hover">
+      <div class="container">
+        <hr>
+          <thead>
+            <tr>
+                <th class="text-center" width="5%" >
+                    <a>NO</a>
+                </th>
+                <th class="text-center" width="5%" >
+                  <span>
+                    <a>会員番号</a>
+                  </span>
+                </th>
+                <th class="text-center" width="20%" >
+                    <a>Name</a>
+                </th>
+                <th class="text-center" width="15%" >
+                    <a>Status</a>
+                </th>
+                <th class="text-center" width="10%" >
+                    <a>Grade</a>
+                </th>
+                <th class="text-center" width="10%" >
+                    <a>Date of acquisition</a>
+                </th>
+                <th class="text-center" width="15%" >
+                    <a>Update</a>
+                </th>
+                <th class="text-center" width="15%" >
+                    <a>Button</a>
+                </th>
+            </tr>
+            {% for testee in object_list %}
+            <tr>
+                <td class="text-center">
+                    {{ forloop.counter }}
+                </td>
+                <td class="text-center">
+                  <span>
+                    {{ testee.membership_number }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span>
+                    {{ testee.testee_name }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span>
+                      {{ testee.status }}
+                  </span>
+                </td>
+                <td class="text-center">
+                <!-- current grade -->
+                    {% if testee.kyoshi %}
+                        <a>教士</a>
+                    {% elif testee.seventh_grade %}
+                        <a>七段</a>
+                    {% elif testee.renshi %}
+                        <a>練士</a>
+                    {% elif testee.sixth_grade %}
+                        <a>六段</a>
+                    {% elif testee.fifth_grade %}
+                        <a>五段</a>
+                    {% elif testee.fourth_grade %}
+                        <a>四段</a>
+                    {% elif testee.third_grade %}
+                        <a>三段</a>
+                    {% elif testee.second_grade %}
+                        <a>二段</a>
+                    {% elif testee.first_grade %}
+                        <a>初段</a>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                  <span>
+                    <!-- current grade -->
+                        {% if testee.kyoshi %}
+                            {{ testee.kyoshi }}
+                        {% elif testee.seventh_grade %}
+                            {{ testee.seventh_grade }}
+                        {% elif testee.renshi %}
+                            {{ testee.renshi }}
+                        {% elif testee.sixth_grade %}
+                            {{ testee.sixth_grade }}
+                        {% elif testee.fifth_grade %}
+                            {{ testee.fifth_grade }}
+                        {% elif testee.fourth_grade %}
+                            {{ testee.fourth_grade }}
+                        {% elif testee.third_grade %}
+                            {{ testee.third_grade }}
+                        {% elif testee.second_grade %}
+                            {{ testee.second_grade }}
+                        {% elif testee.first_grade %}
+                            {{ testee.first_grade }}
+                        {% endif %}
+                  </span>
+                </td>
+                <td class="text-center">
+                    <a href="{% url 'testee_update' testee.id %}?dojo={{ testee.dojo.id }}">
+                        <button class="btn btn-primary">Update</button>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a href="#">
+                        <button class="btn btn-danger">Button</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </thead>
+      </div>
+    </table>
+{% endblock %}

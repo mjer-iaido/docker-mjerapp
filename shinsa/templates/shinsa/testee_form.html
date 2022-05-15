@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<!-- Content Header (Page header) -->
+
+<div class="content-header">
+    <div class="container">
+        {% if testee.id %}
+            <h1 class="m-0 text-dark">Update member info</h1>
+            <h2>{{ testee.testee_name }}</h2>
+        {% else %}
+            <h1 class="m-0 text-dark">Register a new member</h1>
+        {% endif %}
+    </div>
+<div class="container">
+    <form method="POST">{% csrf_token %}
+        <table id=testee_list width="100%" class="table table-striped table-bordered table-hover">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {{ form.as_table }}
+            </div>
+        </table>
+        <button class="btn btn-primary" type="submit">送信</button>
+        <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+    </form>
+</div>
+{% endblock %}

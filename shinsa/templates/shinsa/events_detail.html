@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- Content Header (Page header) -->
+ <div class="content-header">
+   <div class="container-fluid">
+     <div class="row mb-2">
+       <div class="col-sm-6">
+         <h1 class="m-0 text-dark">Detail</h1>
+       </div><!-- /.col -->
+     </div><!-- /.row -->
+   </div><!-- /.container-fluid -->
+ </div>
+
+ <div class="row">
+   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+       <div class="post-preview">
+           <a href="#">
+               <h2 class="post-title">
+                 <h2> {{ object.event_name }} </h2>
+                 <p>  {{ object.event_date }}</p>
+               </h2>
+           </a>
+           <!--- <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 24, 2014</p> -->
+       </div>
+   </div>
+ </div>
+{% endblock %}

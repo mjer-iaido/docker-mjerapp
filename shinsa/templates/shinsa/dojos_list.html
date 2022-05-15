@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="container">
+    <div class="container">
+      {% for dojos in object_list|slice:":1" %}
+          <h3> Selected country is {{ dojos.country.country_eng }}</h3>
+      {% endfor %}
+    </div>
+    <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+
+    <table style="font-size: 1.2rem; width="100%" class="table table-striped table-bordered table-hover">
+        <hr>
+          <thead>
+            <tr>
+                <th class="text-center" width="5%" >
+                    <h3>NO</h3>
+                </th>
+                <th class="text-center" width="35%" >
+                    <h3>Official Dojo</h3>
+                </th>
+                <th class="text-center" width="30%" >
+                    <h3>Members list</h3>
+                </th>
+                <th class="text-center" width="30%" >
+                    <h3></h3>
+                </th>
+            </tr>
+            {% for dojos in object_list %}
+            <tr>
+                <td class="text-center">
+                    {{ forloop.counter }}
+                </td>
+                <td class="text-center">
+                    <a>{{ dojos.dojo_name }} : {{ dojos.dojo_name_eng }}</a>
+                </td>
+                <td class="text-center">
+                    <a href="{% url 'testee' %}?dojo={{ dojos.id }}">
+                        <button class="btn btn-primary">go to 会員一覧</button>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a href="#">
+                        <button class="btn btn-danger">button</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </thead>
+    </table>
+  </div>
+{% endblock %}
