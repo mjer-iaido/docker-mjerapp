@@ -43,7 +43,7 @@ def exportpdf_shinsa(request):
 
     pdf_file = HTML(request.GET.get('path')).write_pdf(
         stylesheets=[
-            CSS(string='body { font-family: sans-serif !important }'),
+            CSS(string='body { font-family: "M PLUS 1p", sans-serif; !important }'),
         ]
     )
     response = HttpResponse(pdf_file, content_type='application/pdf')
