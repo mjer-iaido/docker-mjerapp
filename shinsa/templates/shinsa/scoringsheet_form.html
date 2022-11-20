@@ -1,25 +1,29 @@
 {% extends "base.html" %}
+{% load utils %}
+{% load sum_points %}
+
 {% block body %}
 <!-- Content Header (Page header) -->
-  <div class="content-header">
-      <h3>昇段審査　受審者</h3>
-      <h2>
-          {{ scoringsheet.testee }}
-      </h2>
-  </div>
-  <form method="POST">{% csrf_token %}
-      <table width="50%" class="table table-striped table-bordered table-hover">
-          <tr>
-              <th width="25%">
-                  <h3>審査員 / 筆記得点</h3>
-              </th>
-              <th width="">
-                  <h3>得点</h3>
-              </th>
-          </tr>
-          {{ form }}
-      </table>
-      <button class="btn btn-primary" type="submit">送信</button>
-      <input type="button" value="戻る" onClick="javascript:history.go(-1);">
-  </form>
+     <div class="content-header">
+        <h3>昇段審査　受審者</h3>
+        <h2>
+            {{ scoringsheet.testee }}
+        </h2>
+    </div>
+    <form method="POST">{% csrf_token %}
+        <table width="50%" class="table table-striped table-bordered table-hover">
+            <tr>
+                <th width="25%">
+                    <h3>審査員 / 筆記得点</h3>
+                </th>
+                <th width="">
+                    <h3>得点</h3>
+                </th>
+            </tr>
+            {{ form }}
+        </table>
+        <button class="btn btn-primary" type="submit">送信</button>
+        <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+    </form>
+
 {% endblock %}
