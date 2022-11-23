@@ -32,5 +32,4 @@ def update_profile(scoringsheet):
         else:
             TesteeUpdateView.undo_testee_grade(scoringsheet, scoringsheet.testee_id)
 
-        return
-        
+    return
