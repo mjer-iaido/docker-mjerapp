@@ -82,7 +82,11 @@
                 </td>
                 <td class="text-center">
                 <!-- current grade -->
-                    {% if testee.kyoshi %}
+                    {% if testee.hanshi %}
+                        <a>範士</a>
+                    {% elif testee.eighth_grade %}
+                        <a>八段</a>
+                    {% elif testee.kyoshi %}
                         <a>教士</a>
                     {% elif testee.seventh_grade %}
                         <a>七段</a>
@@ -105,7 +109,11 @@
                 <td class="text-center">
                   <span>
                     <!-- current grade -->
-                        {% if testee.kyoshi %}
+                        {% if testee.hanshi %}
+                            {{ testee.hanshi }}
+                        {% elif testee.eighth_grade %}
+                            {{ testee.eighth_grade }}                   
+                        {% elif testee.kyoshi %}
                             {{ testee.kyoshi }}
                         {% elif testee.seventh_grade %}
                             {{ testee.seventh_grade }}

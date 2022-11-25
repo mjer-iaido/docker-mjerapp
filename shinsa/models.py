@@ -207,6 +207,17 @@ class Testee(models.Model):
         blank=True,
         null=True
     )
+    eighth_grade = models.DateField(
+        verbose_name='八段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    hanshi = models.DateField(
+        verbose_name='範士取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+
     dojo = models.ForeignKey(
         Dojos,
         verbose_name='道場',

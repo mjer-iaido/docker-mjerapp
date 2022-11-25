@@ -102,7 +102,9 @@ class TesteeUpdateView(LoginRequiredMixin, UpdateView):
         "sixth_grade",
         "renshi",
         "seventh_grade",
-        "kyoshi"
+        "kyoshi",
+        "eighth_grade",
+        "hanshi"
         ]
 #    success_url = reverse_lazy("scoringsheet")
     def get_success_url(self):
@@ -111,9 +113,9 @@ class TesteeUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
 
     def update_testee_grade(scoringsheet, pk):
-        today = datetime.date.today()
+        day = scoringsheet.events.event_date
         grade = TesteeUpdateView.get_grade(scoringsheet)
-        Testee.objects.update_or_create(pk=pk, defaults={grade: today.strftime('%Y''-''%m''-''%d')})
+        Testee.objects.update_or_create(pk=pk, defaults={grade: day.strftime('%Y''-''%m''-''%d')})
         return  
 
     def undo_testee_grade(scoringsheet, pk):
@@ -140,8 +142,12 @@ class TesteeUpdateView(LoginRequiredMixin, UpdateView):
             grade: str = "renshi"
         elif scoringsheet.grade_id == 9:
             grade: str = "seventh_grade"
-        else:
+        elif scoringsheet.grade_id == 10:
             grade: str = "kyoshi"
+        elif scoringsheet.grade_id == 11:
+            grade: str = "eighth_grade"
+        else:
+            grade: str = "hanshi"
         return grade
 
 

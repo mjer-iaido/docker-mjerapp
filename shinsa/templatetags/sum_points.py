@@ -1,26 +1,26 @@
 from django import template
 register = template.Library()
 
-# Shinsa scoringsheet
-@register.simple_tag
-def points5(value1, value2, value3, value4, value5):
-    return value1 + value2 + value3 + value4 + value5
+# # Shinsa scoringsheet
+# @register.simple_tag
+# def points5(value1, value2, value3, value4, value5):
+#     return value1 + value2 + value3 + value4 + value5
 
-@register.simple_tag
-def points4(value1, value2, value3, value4):
-    return value1 + value2 + value3 + value4
+# @register.simple_tag
+# def points4(value1, value2, value3, value4):
+#     return value1 + value2 + value3 + value4
 
-@register.simple_tag
-def points3(value1, value2, value3):
-    return value1 + value2 + value3
+# @register.simple_tag
+# def points3(value1, value2, value3):
+#     return value1 + value2 + value3
 
-@register.simple_tag
-def success():
-    return "success"
+# @register.simple_tag
+# def success():
+#     return "success"
 
-@register.simple_tag
-def failure():
-    return "failure"
+# @register.simple_tag
+# def failure():
+#     return "failure"
 
 # Embu scoringsheet
 # 5testers
