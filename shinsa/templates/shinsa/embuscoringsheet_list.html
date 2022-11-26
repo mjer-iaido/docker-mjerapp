@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load utils %}
-{% load sum_points %}
 
 {% block body %}
     <style>
@@ -22,229 +21,147 @@
         }
 
     </style>
-    <div class="container">
-      {% for embuscoringsheet in object_list|slice:":1" %}
-          <h3> {{ embuscoringsheet.events.event_name }}  - 演武会採点表</h3>
-          <p>  {{ embuscoringsheet.events.event_date }} </p>
-      {% endfor %}
-    </div>
+    {% for embuscoringsheet in object_list|slice:":1" %}
+        <h3> {{ embuscoringsheet.events.event_name }}  - 演武会採点表</h3>
+        <p>  {{ embuscoringsheet.events.event_date }} </p>
+    {% endfor %}
     <table style="font-size: 0.70rem; width="100%" class="table table-striped table-bordered table-hover">
-      <div class="container">
-        {% for embuscoringsheet in object_list|slice:":1" %}
-        <thead>
-          <tr>
-            <th class="text-center" width="4%" >
-                <span>No</span>
-            </th>
-            <th class="text-center" width="20%" >
-                <span>受審者</span>
-            </th>
-            <th class="text-center" width="6%" >
-                <span>段位</span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ embuscoringsheet.events.marker1 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ embuscoringsheet.events.marker2 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ embuscoringsheet.events.marker3 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ embuscoringsheet.events.marker4 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ embuscoringsheet.events.marker5 }}
-                </span>
-            </th>
-            <th class="fontred" width="4%" >
-                  <span>最大得点</span>
-            </th>
-            <th class="fontred" width="4%" >
-                  <span>最低得点</span>
-            </th>
-            <th class="fontred" width="4%" >
-                  <span>獲得点</span>
-            </th>
-            <th class="text-center" width="6%" >
-                  <span>70%判定</span>
-            </th>
-            <th class="text-center" width="6%" >
-                  <span>80%判定</span>
-            </th>
-            <th class="text-center" width="6%" >
-                  <span>90%判定</span>
-            </th>
-          </tr>
-        </thead>
-        {% endfor %}
-      </div>
-         <!-- 表のデータ部分の表示-->
-      <div class="row">
-          <tbody>
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              {% for embuscoringsheet in object_list %}
-              <tr class="odd gradeX text-center">
-                  <h3 class="post-title">
-                      <td class="text-center" width="">{{ forloop.counter }}</td>
-                      <td class="text-center" width="">
-            <!-- 5markers -->
-                        {% if embuscoringsheet.events.marker5 %}
-                            <a href="{% url 'embuscoringsheet5_update' embuscoringsheet.events.marker1 embuscoringsheet.events.marker2 embuscoringsheet.events.marker3 embuscoringsheet.events.marker4 embuscoringsheet.events.marker5 embuscoringsheet.id %}?event={{ embuscoringsheet.events.id }}">
-                                <span>
-                                    {{ embuscoringsheet.testee.testee_name }}
-                                </span>
-                            </a>
-            <!-- 4markers -->
-                        {% elif embuscoringsheet.events.marker3 and embuscoringsheet.events.marker4 %}
-                            <a href="{% url 'embuscoringsheet4_update' embuscoringsheet.events.marker1 embuscoringsheet.events.marker2 embuscoringsheet.events.marker3 embuscoringsheet.events.marker4 embuscoringsheet.id %}?event={{ embuscoringsheet.events.id }}">
-                                <span>
-                                    {{ embuscoringsheet.testee.testee_name }}
-                                </span>
-                            </a>
-            <!-- 3markers -->
-                        {% elif embuscoringsheet.events.marker3 %}
-                            <a href="{% url 'embuscoringsheet3_update' embuscoringsheet.events.marker1 embuscoringsheet.events.marker2 embuscoringsheet.events.marker3 embuscoringsheet.id %}?event={{ embuscoringsheet.events.id }}">
-                                <span>
-                                    {{ embuscoringsheet.testee.testee_name }}
-                                </span>
-                            </a>
-                        {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {{ embuscoringsheet.grade.grade_name }}
-                      </td>
-                  </h3>
-            <!-- 5markers -->
-                  {% if embuscoringsheet.events.marker5 %}
-                      <h3 class="post-title">
-                          <td class="text-center" width="">{{ embuscoringsheet.score1 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score2 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score3 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score4 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score5 }}</td>
-                      <!-- MAX Point -->
-                          <td class="fontred" width="">
-                              {% maxpoint5 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 embuscoringsheet.score4 embuscoringsheet.score5 as max_point %}
-                              {{ max_point }}
-                          </td>
-                      <!-- Min Point -->
-                          <td class="fontred" width="">
-                              {% minpoint5 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 embuscoringsheet.score4 embuscoringsheet.score5 as min_point %}
-                              {{ min_point }}
-                          </td>
-                      </h3>
-                      <td class="fontred" width="">
-                          {% embupoint5 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 embuscoringsheet.score4 embuscoringsheet.score5 max_point min_point as embu_point %}
-                          {{ embu_point }}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 21 %}
-                              <a>合格</a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 24 %}
-                              <a class="fontred">合格</a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 27 %}
-                              <a class="fontred">合格</a>
-                          {% endif %}
-                      </td>
-            <!-- 4markers -->
-                  {% elif embuscoringsheet.events.marker4 and embuscoringsheet.events.marker3 %}
-                      <h3 class="post-title">
-                          <td class="text-center" width="">{{ embuscoringsheet.score1 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score2 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score3 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score4 }}</td>
-                          <td class="text-center" width=""></td>
-                      <!-- MAX Point -->
-                          <td class="fontred" width="">
-                              {% maxpoint4 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 embuscoringsheet.score4 as max_point %}
-                              {{ max_point }}
-                          </td>
-                      <!-- Min Point -->
-                          <td class="fontred" width="">
-                              {% minpoint4 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 embuscoringsheet.score4 as min_point %}
-                              {{ min_point }}
-                          </td>
-                      </h3>
-                      <td class="fontred" width="">
-                          {% embupoint4 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 embuscoringsheet.score4 max_point min_point as embu_point %}
-                          {{ embu_point }}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 14 %}
-                              <a>合格</a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 16 %}
-                              <a class="fontred">合格</a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 18 %}
-                              <a class="fontred">合格</a>
-                          {% endif %}
-                      </td>
-            <!-- 3markers -->
-                  {% elif embuscoringsheet.events.marker3 %}
-                      <h3 class="post-title">
-                          <td class="text-center" width="">{{ embuscoringsheet.score1 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score2 }}</td>
-                          <td class="text-center" width="">{{ embuscoringsheet.score3 }}</td>
-                          <td class="text-center" width=""></td>
-                          <td class="text-center" width=""></td>
-                        <!-- MAX Point -->
-                          <td class="fontred" width="">
-                              {% maxpoint3 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 as max_point %}
-                              {{ max_point }}
-                          </td>
-                        <!-- Min Point -->
-                          <td class="fontred" width="">
-                              {% minpoint3 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 as min_point %}
-                              {{ min_point }}
-                          </td>
-                      </h3>
-                      <td class="fontred" width="">
-                          {% embupoint3 embuscoringsheet.score1 embuscoringsheet.score2 embuscoringsheet.score3 max_point min_point as embu_point %}
-                          {{ embu_point }}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 7 %}
-                              <a>合格</a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 8 %}
-                              <a class="fontred">合格</a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {% if embu_point >= 9 %}
-                              <a class="fontred">合格</a>
-                          {% endif %}
-                      </td>
-                  {% endif %}
-              </tr>
-              {% endfor %}
-            </div>
-          </tbody>
-      </div>
+        <div class="container">
+            {% for embuscoringsheet in object_list|slice:":1" %}
+                <thead>
+                    <tr>
+                        <th class="text-center" width="4%" >
+                            <span>No</span>
+                        </th>
+                        <th class="text-center" width="20%" >
+                            <span>受審者</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                            <span>段位</span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ embuscoringsheet.events.marker1 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ embuscoringsheet.events.marker2 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ embuscoringsheet.events.marker3 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ embuscoringsheet.events.marker4 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ embuscoringsheet.events.marker5 }}
+                            </span>
+                        </th>
+                        <th class="fontred" width="4%" >
+                                <span>最大得点</span>
+                        </th>
+                        <th class="fontred" width="4%" >
+                                <span>最低得点</span>
+                        </th>
+                        <th class="fontred" width="4%" >
+                                <span>獲得点</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                                <span>70%判定</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                                <span>80%判定</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                                <span>90%判定</span>
+                        </th>
+                    </tr>
+                </thead>
+            {% endfor %}
+        </div>
+        <!-- 表のデータ部分の表示-->
+        <div class="row">
+            <tbody>
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {% for embuscoringsheet in object_list %}
+                        <tr class="odd gradeX text-center">
+                            <h3 class="post-title">
+                                <td class="text-center" width="">{{ forloop.counter }}</td>
+                                <td class="text-center" width="">
+                                    {% if embuscoringsheet.events.marker5 %}
+                                        <a href="{% url 'embuscoringsheet5_update' embuscoringsheet.events.marker1 embuscoringsheet.events.marker2 embuscoringsheet.events.marker3 embuscoringsheet.events.marker4 embuscoringsheet.events.marker5 embuscoringsheet.id %}?event={{ embuscoringsheet.events.id }}">
+                                    {% elif embuscoringsheet.events.marker3 and embuscoringsheet.events.marker4 %}
+                                        <a href="{% url 'embuscoringsheet4_update' embuscoringsheet.events.marker1 embuscoringsheet.events.marker2 embuscoringsheet.events.marker3 embuscoringsheet.events.marker4 embuscoringsheet.id %}?event={{ embuscoringsheet.events.id }}">
+                                    {% elif embuscoringsheet.events.marker3 %}
+                                        <a href="{% url 'embuscoringsheet3_update' embuscoringsheet.events.marker1 embuscoringsheet.events.marker2 embuscoringsheet.events.marker3 embuscoringsheet.id %}?event={{ embuscoringsheet.events.id }}">
+                                    {% endif %}
+                                        <span>
+                                            {{ embuscoringsheet.testee.testee_name }}
+                                        </span>
+                                    </a>
+                                </td>
+                                <td class="text-center" width="">
+                                    {{ embuscoringsheet.grade.grade_name }}
+                                </td>
+                            </h3>
+                            <h3 class="post-title">
+                                <td class="text-center" width="">{{ embuscoringsheet.score1 }}</td>
+                                <td class="text-center" width="">{{ embuscoringsheet.score2 }}</td>
+                                <td class="text-center" width="">{{ embuscoringsheet.score3 }}</td>
+                                {% if embuscoringsheet.events.marker5 %}
+                                    <td class="text-center" width="">{{ embuscoringsheet.score4 }}</td>
+                                    <td class="text-center" width="">{{ embuscoringsheet.score5 }}</td>
+
+                                {% elif embuscoringsheet.events.marker4 and embuscoringsheet.events.marker3 %}
+                                    <td class="text-center" width="">{{ embuscoringsheet.score4 }}</td>
+                                    <td class="text-center" width=""></td>
+
+                                {% elif embuscoringsheet.events.marker3 %}
+                                    <td class="text-center" width=""></td>
+                                    <td class="text-center" width=""></td>
+
+                                {% endif %}
+                                <!-- MAX Point -->
+                                    <td class="fontred" width="">
+                                        {% embu_cal_points embuscoringsheet as result %}
+                                        {{ result.0 }}
+                                    </td>
+                                <!-- Min Point -->
+                                    <td class="fontred" width="">
+                                        {{ result.1 }}
+                                    </td>
+                            </h3>
+                            <td class="fontred" width="">
+                                {{ result.2 }}
+                            </td>
+                            <td class="text-center" width="">
+                                {% if result.3 %}
+                                    <a>合格</a>
+                                {% endif %}
+                            </td>
+                            <td class="text-center" width="">
+                                {% if result.4 %}
+                                    <a class="fontred">合格</a>
+                                {% endif %}
+                            </td>
+                            <td class="text-center" width="">
+                                {% if result.5 %}
+                                    <a class="fontred">合格</a>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </div>
+            </tbody>
+        </div>
     </table>
     <!-- PDF export -->
     <form action="/exportpdf/shinsa/" method="get" target="_blank">

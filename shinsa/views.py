@@ -292,7 +292,7 @@ class EmbuscoringsheetListView(ListView):
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
         object_list = Embuscoringsheet.objects.filter(
-                        Q(events__id=eventparam))
+                        Q(events__id=eventparam)).order_by('id')
         return object_list
 
 class EmbuscoringsheetCreateView(LoginRequiredMixin, CreateView):

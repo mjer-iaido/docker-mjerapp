@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load utils %}
-{% load sum_points %}
 
 {% block body %}
     <style>
@@ -82,7 +81,7 @@
                 </thead>
             {% endfor %}
         </div>
-            <!-- 表のデータ部分の表示-->
+        <!-- 表のデータ部分の表示-->
         <div class="row">
             <tbody>
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -91,27 +90,20 @@
                             <h3 class="post-title">
                                 <td class="text-center" width="">{{ forloop.counter }}</td>
                                 <td class="text-center" width="">
-                    <!-- 5markers -->
                                 {% if scoringsheet.events.marker5 %}
                                     <a href="{% url 'scoringsheet5_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.events.marker4 scoringsheet.events.marker5 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
-                                        {{ scoringsheet.testee.testee_name }}
-                                    </a>
-                    <!-- 4markers -->
                                 {% elif scoringsheet.events.marker3 and scoringsheet.events.marker4 %}
                                     <a href="{% url 'scoringsheet4_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.events.marker4 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
-                                        {{ scoringsheet.testee.testee_name }}
-                                    </a>
-                    <!-- 3markers -->
                                 {% elif scoringsheet.events.marker3 %}
                                     <a href="{% url 'scoringsheet3_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
-                                        {{ scoringsheet.testee.testee_name }}
-                                    </a>
                                 {% endif %}
+                                    {{ scoringsheet.testee.testee_name }}
+                                </a>
                                 </td>
                                 <td class="text-center" width="">
                                     {{ scoringsheet.grade.grade_name }}
                                 </td>
-                    <!-- scorers -->
+                                <!-- scorers -->
                                 <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
                                 <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
                                 <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
@@ -125,7 +117,7 @@
                                     <td class="text-center" width=""></td>
                                     <td class="text-center" width=""></td>
                                 {% endif %}
-                    <!-- pratical point and judge -->
+                                <!-- pratical point and judge -->
                                 <td class="fontred" width="">
                                     {% cal_points scoringsheet as result %}
                                     {{ result.1 }}
@@ -138,7 +130,7 @@
                                     {% endif %}
                                 </span>
                             </td>   
-                    <!-- written point and judge -->
+                            <!-- written point and judge -->
                             <td class="fontred" width="">
                                     {{ result.3 }}
                             </td>
