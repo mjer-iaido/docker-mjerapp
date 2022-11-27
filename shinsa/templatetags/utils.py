@@ -3,27 +3,6 @@ from shinsa.views import TesteeUpdateView
 
 register = template.Library()
 
-@register.filter(name="pratical_points")
-def pratical_points(score1, score2):
-     return score1 + score2
-
-@register.simple_tag(name="update_profile")
-def update_profile(scoringsheet):
-
-    if scoringsheet == '':
-        pass
-    else:
-        result = cal_points(scoringsheet)
-
-        # final judge
-        if result[4]:
-            TesteeUpdateView.update_testee_grade(scoringsheet, scoringsheet.testee_id)
-        else:
-            TesteeUpdateView.undo_testee_grade(scoringsheet, scoringsheet.testee_id)
-
-    return
-
-
 @register.simple_tag(name="cal_points")
 def cal_points(scoringsheet) -> tuple[bool, int, bool, int, bool]:
     """
@@ -67,6 +46,10 @@ def cal_points(scoringsheet) -> tuple[bool, int, bool, int, bool]:
         # final judge
         if passed and w_passed:
             judgement = True
+            # profile update
+            TesteeUpdateView.update_testee_grade(scoringsheet, scoringsheet.testee_id)
+        else:
+            TesteeUpdateView.undo_testee_grade(scoringsheet, scoringsheet.testee_id)
 
         return passed, p_totalpoints, w_passed, w_points, judgement
     return
