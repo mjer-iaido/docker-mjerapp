@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load utils %}
-{% load sum_points %}
 
 {% block body %}
     <style>
@@ -20,194 +19,139 @@
             text-align: center;
         }
     </style>
-    <div class="container">
-      {% for scoringsheet in object_list|slice:":1" %}
-          <h3> {{ scoringsheet.events.event_name }}  - 昇段審査採点表</h3>
-          <p>  {{ scoringsheet.events.event_date }} </p>
-      {% endfor %}
-    </div>
+    {% for scoringsheet in object_list|slice:":1" %}
+        <h3> {{ scoringsheet.events.event_name }}  - 昇段審査採点表</h3>
+        <p>  {{ scoringsheet.events.event_date }} </p>
+    {% endfor %}
     <table style="font-size: 0.77rem; width="100%" class="table table-striped table-bordered table-hover">
-      <div class="container">
-        {% for scoringsheet in object_list|slice:":1" %}
-        <thead>
-          <tr>
-            <th class="text-center" width="4%" >
-                <span>No</span>
-            </th>
-            <th class="text-center" width="20%" >
-                <span>受審者</span>
-            </th>
-            <th class="text-center" width="6%" >
-                <span>受審段</span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ scoringsheet.events.marker1 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ scoringsheet.events.marker2 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ scoringsheet.events.marker3 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ scoringsheet.events.marker4 }}
-                </span>
-            </th>
-            <th class="text-center" width="8%" >
-                <span>
-                  {{ scoringsheet.events.marker5 }}
-                </span>
-            </th>
-            <th class="fontred" width="6%" >
-                  <span>実技点数</span>
-            </th>
-            <th class="text-center" width="6%" >
-                  <span>実技合否</span>
-            </th>
-            <th class="fontred" width="6%" >
-                  <span>学科点数</span>
-            </th>
-            <th class="text-center" width="6%" >
-                  <span>学科合否</span>
-            </th>
-            <th class="fontred" width="6%" >
-                  <span>総合合否</span>
-            </th>
-          </tr>
-        </thead>
-        {% endfor %}
-      </div>
-         <!-- 表のデータ部分の表示-->
-      <div class="row">
-          <tbody>
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              {% for scoringsheet in object_list %}
-              <tr class="odd gradeX text-center">
-                  <h3 class="post-title">
-                      <td class="text-center" width="">{{ forloop.counter }}</td>
-                      <td class="text-center" width="">
-            <!-- 5markers -->
-                          {% if scoringsheet.events.marker5 %}
-                              <a href="{% url 'scoringsheet5_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.events.marker4 scoringsheet.events.marker5 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
-                                  {{ scoringsheet.testee.testee_name }}
-                              </a>
-            <!-- 4markers -->
-                          {% elif scoringsheet.events.marker3 and scoringsheet.events.marker4 %}
-                              <a href="{% url 'scoringsheet4_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.events.marker4 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
-                                  {{ scoringsheet.testee.testee_name }}
-                              </a>
-            <!-- 3markers -->
-                          {% elif scoringsheet.events.marker3 %}
-                              <a href="{% url 'scoringsheet3_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
-                                  {{ scoringsheet.testee.testee_name }}
-                              </a>
-                          {% endif %}
-                      </td>
-                      <td class="text-center" width="">
-                          {{ scoringsheet.grade.grade_name }}
-                      </td>
-            <!-- 5markers -->
-                      {% if scoringsheet.events.marker5 %}
-                          <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score4 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score5 }}</td>
-                          <td class="fontred" width="">
-                              {% points5 scoringsheet.score1 scoringsheet.score2 scoringsheet.score3 scoringsheet.score4 scoringsheet.score5 as p_totalpoints %}
-                              {{ p_totalpoints }}
-                          </td>
-            <!-- 4markers -->
-                      {% elif scoringsheet.events.marker4 and scoringsheet.events.marker3 %}
-                          <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score4 }}</td>
-                          <td class="text-center" width=""></td>
-                          <td class="fontred" width="">
-                              {% points4 scoringsheet.score1 scoringsheet.score2 scoringsheet.score3 scoringsheet.score4 as p_totalpoints %}
-                              {{ p_totalpoints }}
+        <div class="container">
+            {% for scoringsheet in object_list|slice:":1" %}
+                <thead>
+                    <tr>
+                        <th class="text-center" width="4%" >
+                            <span>No</span>
+                        </th>
+                        <th class="text-center" width="20%" >
+                            <span>受審者</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                            <span>受審段</span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ scoringsheet.events.marker1 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ scoringsheet.events.marker2 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ scoringsheet.events.marker3 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ scoringsheet.events.marker4 }}
+                            </span>
+                        </th>
+                        <th class="text-center" width="8%" >
+                            <span>
+                                {{ scoringsheet.events.marker5 }}
+                            </span>
+                        </th>
+                        <th class="fontred" width="6%" >
+                            <span>実技点数</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                            <span>実技合否</span>
+                        </th>
+                        <th class="fontred" width="6%" >
+                            <span>学科点数</span>
+                        </th>
+                        <th class="text-center" width="6%" >
+                            <span>学科合否</span>
+                        </th>
+                        <th class="fontred" width="6%" >
+                            <span>総合合否</span>
+                        </th>
+                    </tr>
+                </thead>
+            {% endfor %}
+        </div>
+        <!-- 表のデータ部分の表示-->
+        <div class="row">
+            <tbody>
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {% for scoringsheet in object_list %}
+                        <tr class="odd gradeX text-center">
+                            <h3 class="post-title">
+                                <td class="text-center" width="">{{ forloop.counter }}</td>
+                                <td class="text-center" width="">
+                                {% if scoringsheet.events.marker5 %}
+                                    <a href="{% url 'scoringsheet5_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.events.marker4 scoringsheet.events.marker5 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
+                                {% elif scoringsheet.events.marker3 and scoringsheet.events.marker4 %}
+                                    <a href="{% url 'scoringsheet4_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.events.marker4 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
+                                {% elif scoringsheet.events.marker3 %}
+                                    <a href="{% url 'scoringsheet3_update' scoringsheet.events.marker1 scoringsheet.events.marker2 scoringsheet.events.marker3 scoringsheet.id %}?event={{ scoringsheet.events.id }}">
+                                {% endif %}
+                                    {{ scoringsheet.testee.testee_name }}
+                                </a>
+                                </td>
+                                <td class="text-center" width="">
+                                    {{ scoringsheet.grade.grade_name }}
+                                </td>
+                                <!-- scorers -->
+                                <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
+                                <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
+                                <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
+                                {% if scoringsheet.events.marker5 %}
+                                    <td class="text-center" width="">{{ scoringsheet.score4 }}</td>
+                                    <td class="text-center" width="">{{ scoringsheet.score5 }}</td>
+                                {% elif scoringsheet.events.marker4 and scoringsheet.events.marker3 %}
+                                    <td class="text-center" width="">{{ scoringsheet.score4 }}</td>
+                                    <td class="text-center" width=""></td>
+                                {% else %}
+                                    <td class="text-center" width=""></td>
+                                    <td class="text-center" width=""></td>
+                                {% endif %}
+                                <!-- pratical point and judge -->
+                                <td class="fontred" width="">
+                                    {% cal_points scoringsheet as result %}
+                                    {{ result.1 }}
+                                </td> 
+                            </h3>
+                            <td class="text-center" width="">
+                                <span>
+                                    {% if result.0 %}
+                                        <a>合格</a>
+                                    {% endif %}
+                                </span>
+                            </td>   
+                            <!-- written point and judge -->
+                            <td class="fontred" width="">
+                                    {{ result.3 }}
                             </td>
-            <!-- 3markers -->
-                      {% elif scoringsheet.events.marker3 %}
-                          <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
-                          <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
-                          <td class="text-center" width=""></td>
-                          <td class="text-center" width=""></td>
-                          <td class="fontred" width="">
-                              {% points3 scoringsheet.score1 scoringsheet.score2 scoringsheet.score3 as p_totalpoints %}
-                              {{ p_totalpoints }}
-                          </td>
-                      {% endif %}
-                  </h3>
-            <!-- 5markers -->
-                  {% if scoringsheet.events.marker5 %}
-                      <td class="text-center" width="">
-                          <span>
-                              {% if p_totalpoints >= 35 %}
-                                  <a>合格</a>
-                                  {% success as pratical_judge %}
-                              {% else %}
-                                  {% failure as pratical_judge %}
-                              {% endif %}
-                          </span>
-                      </td>
-            <!-- 4markers -->
-                  {% elif scoringsheet.events.marker4 and scoringsheet.events.marker3 %}
-                      <td class="text-center" width="">
-                          <span>
-                              {% if p_totalpoints >= 28 %}
-                                  <a>合格</a>
-                                  {% success as pratical_judge %}
-                              {% else %}
-                                  {% failure as pratical_judge %}
-                              {% endif %}
-                          </span>
-                      </td>
-            <!-- 3markers -->
-                  {% elif scoringsheet.events.marker3 %}
-                      <td class="text-center" width="">
-                          <span>
-                              {% if p_totalpoints >= 21 %}
-                                  <a>合格</a>
-                                  {% success as pratical_judge %}
-                              {% else %}
-                                  {% failure as pratical_judge %}
-                              {% endif %}
-                          </span>
-                      </td>
-                  {% endif %}
-                  <td class="fontred" width="">
-                          {{ scoringsheet.written_points }}
-                  </td>
-                  <td class="text-center" width="">
-                      {% if scoringsheet.written_points >= 80 %}
-                          <a>合格</a>
-                          {% success as written_judge %}
-                      {% else %}
-                          {% failure as written_judge %}
-                      {% endif %}
-                  </td>
-                  <td class="fontred" width="">
-                      {% if pratical_judge == "success" and written_judge == "success" %}
-                          <a>合格</a>
-                      {% endif %}
-                  </td>
-              </tr>
-              {% endfor %}
-            </div>
-          </tbody>
-      </div>
+                            <td class="text-center" width="">
+                                {% if result.2 %}
+                                    <a>合格</a>
+                                {% endif %}
+                            </td>
+                            <td class="fontred" width="">
+                                {% if result.4 %}
+                                    <a>合格</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </div>
+            </tbody>
+        </div>
     </table>
     <!-- PDF export -->
+    <h4>※筆記試験の点数はシステム上５点刻みのため、実点数より切り落としで登録 （例）99点→95点</h4>
     <form action="/exportpdf/shinsa/" method="get" target="_blank">
         <input  type="hidden" name="path" value={{ request.build_absolute_uri }} >
         <button class="btn btn-primary" type="submit"> PDF出力 </button>

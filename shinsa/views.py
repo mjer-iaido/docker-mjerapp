@@ -14,6 +14,7 @@ from django.urls import reverse_lazy
 from urllib.parse import urlencode
 from django.db.models import F
 from django.db.models import Q
+# from django.utils import get_grade
 
 from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country, Status, Embuscoringsheet
 from .forms import ScoringsheetForm
@@ -27,6 +28,7 @@ from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
 
 import tempfile
+import datetime
 
 # Create your views here.
 
@@ -100,13 +102,54 @@ class TesteeUpdateView(LoginRequiredMixin, UpdateView):
         "sixth_grade",
         "renshi",
         "seventh_grade",
-        "kyoshi"
+        "kyoshi",
+        "eighth_grade",
+        "hanshi"
         ]
 #    success_url = reverse_lazy("scoringsheet")
     def get_success_url(self):
         return "".join([reverse('testee'),'?', urlencode(dict(dojo=self.request.GET.get('dojo')))])
 
     login_url = '/login/'
+
+    def update_testee_grade(scoringsheet, pk):
+        day = scoringsheet.events.event_date
+        grade = TesteeUpdateView.get_grade(scoringsheet)
+        Testee.objects.update_or_create(pk=pk, defaults={grade: day.strftime('%Y''-''%m''-''%d')})
+        return  
+
+    def undo_testee_grade(scoringsheet, pk):
+        today = datetime.date.today()
+        grade = TesteeUpdateView.get_grade(scoringsheet)
+        Testee.objects.update_or_create(pk=pk, defaults={grade: None})
+        return  
+
+    def get_grade(scoringsheet):
+        # scoringsheet.grade_id == 1 is 無段
+        if scoringsheet.grade_id == 2:
+            grade: str = "first_grade"
+        elif scoringsheet.grade_id == 3:
+            grade: str = "second_grade"
+        elif scoringsheet.grade_id == 4:
+            grade: str = "third_grade"
+        elif scoringsheet.grade_id == 5:
+            grade: str = "fourth_grade"
+        elif scoringsheet.grade_id == 6:
+            grade: str = "fifth_grade"
+        elif scoringsheet.grade_id == 7:
+            grade: str = "sixth_grade"
+        elif scoringsheet.grade_id == 8:
+            grade: str = "renshi"
+        elif scoringsheet.grade_id == 9:
+            grade: str = "seventh_grade"
+        elif scoringsheet.grade_id == 10:
+            grade: str = "kyoshi"
+        elif scoringsheet.grade_id == 11:
+            grade: str = "eighth_grade"
+        else:
+            grade: str = "hanshi"
+        return grade
+
 
 class TesteeCreateView(LoginRequiredMixin, CreateView):
     model = Testee
@@ -143,9 +186,8 @@ class ScoringsheetListView(ListView):
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
         object_list = Scoringsheet.objects.filter(
-                        Q(events__id=eventparam))
+                        Q(events__id=eventparam)).order_by('id')
         return object_list
-
 
 class ScoringsheetCreateView(LoginRequiredMixin, CreateView):
     model = Scoringsheet
@@ -250,7 +292,7 @@ class EmbuscoringsheetListView(ListView):
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
         object_list = Embuscoringsheet.objects.filter(
-                        Q(events__id=eventparam))
+                        Q(events__id=eventparam)).order_by('id')
         return object_list
 
 class EmbuscoringsheetCreateView(LoginRequiredMixin, CreateView):
@@ -332,3 +374,4 @@ class Embuscoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
         form.fields['score2'].label = self.kwargs.get('marker2')
         form.fields['score3'].label = self.kwargs.get('marker3')
         return form
+
