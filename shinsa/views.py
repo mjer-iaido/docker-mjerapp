@@ -35,6 +35,20 @@ import datetime
 def index(request):
     return render(request, 'shinsa/index.html', {})
 
+# your_profile
+def your_profile(request):
+    return render(request, 'shinsa/your_profile.html', {})
+# def your_profile(LoginRequiredMixin, DetailView):
+#     model = Testee
+
+#     def get_queryset(self):
+#         userparam = self.request.GET.get('request.user')
+#         object_list = Testee.objects.filter(
+#                         Q(membership__number='0101999'))
+#         return object_list
+
+#     login_url = '/login/'
+
 # weasyprint --start--
 def exportpdf_shinsa(request):
     from django.template.loader import get_template
@@ -88,6 +102,14 @@ class TesteeListView(LoginRequiredMixin, ListView):
 
 class TesteeDetailView(DetailView):
     model = Testee
+
+    # your_profile
+#     def get_queryset(self):
+#         userparam = self.request.GET.get('request.user')
+#         object_list = Testee.objects.filter(
+#                         Q(membership__number='0101999'))
+#         return object_list
+
 
 class TesteeUpdateView(LoginRequiredMixin, UpdateView):
     model = Testee
@@ -374,4 +396,3 @@ class Embuscoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
         form.fields['score2'].label = self.kwargs.get('marker2')
         form.fields['score3'].label = self.kwargs.get('marker3')
         return form
-

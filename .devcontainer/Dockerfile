@@ -1,5 +1,6 @@
 FROM python:3 
 ENV PYTHONUNBUFFERED 1 
+RUN pip install --upgrade pip
 RUN pip install django
 RUN pip install psycopg2
 RUN pip install django-weasyprint

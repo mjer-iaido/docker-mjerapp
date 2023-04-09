@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+
+{% block body %}
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<!-- Content Header (Page header) -->
+<div>
+    <h1>MJER Iaido membership card</h1>
+</div>
+
+<div class="containar">
+    <div>
+        <img src="/media/images/web_member_card.png" />
+        <h2>会 員 証</h2>
+        <p>{{ user.username}}</p>
+    </dev>
+</container>
+{% endblock %}
