@@ -19,6 +19,7 @@ h2{
   padding:0;
   margin:0;
 }
+
 p{
   position: absolute;
   top:45%;
@@ -28,4 +29,15 @@ p{
   margin:0;
   font-size:400%;
   color: rgb(98, 93, 93);
+}
+
+h3{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size:500%;
+  color: rgb(98, 93, 93);
+  padding:0;
+  margin:0;
 }

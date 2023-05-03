@@ -38,16 +38,6 @@ def index(request):
 # your_profile
 def your_profile(request):
     return render(request, 'shinsa/your_profile.html', {})
-# def your_profile(LoginRequiredMixin, DetailView):
-#     model = Testee
-
-#     def get_queryset(self):
-#         userparam = self.request.GET.get('request.user')
-#         object_list = Testee.objects.filter(
-#                         Q(membership__number='0101999'))
-#         return object_list
-
-#     login_url = '/login/'
 
 # weasyprint --start--
 def exportpdf_shinsa(request):
@@ -96,6 +86,18 @@ class TesteeListView(LoginRequiredMixin, ListView):
         dojoparam = self.request.GET.get('dojo')
         object_list = Testee.objects.filter(
                         Q(dojo__id=dojoparam))
+        return object_list
+
+    login_url = '/login/'
+
+class TesteeprofileListView(LoginRequiredMixin, ListView):
+    model = Testee
+    template_name = 'shinsa/your_profile.html'
+
+    def get_queryset(self):
+        userparam = self.request.user
+        object_list = Testee.objects.filter(
+                        Q(membership_number=userparam))
         return object_list
 
     login_url = '/login/'

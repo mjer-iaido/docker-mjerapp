@@ -35,6 +35,7 @@ from shinsa.views import TesteeListView
 from shinsa.views import TesteeCreateView
 from shinsa.views import TesteeDetailView
 from shinsa.views import TesteeUpdateView
+from shinsa.views import TesteeprofileListView
 
 # scoringsheet
 from shinsa import views
@@ -74,6 +75,7 @@ urlpatterns = [
     path('testee', TesteeListView.as_view(), name="testee"),
     path('testee/<int:pk>', TesteeDetailView.as_view(), name="testee_detail"),
     path('testee_update/<int:pk>', TesteeUpdateView.as_view(), name="testee_update"),
+    path('testee_profile', TesteeprofileListView.as_view(), name="testee_profile"),
 
 # Events
     path('events', EventsListView.as_view(), name="events"),
