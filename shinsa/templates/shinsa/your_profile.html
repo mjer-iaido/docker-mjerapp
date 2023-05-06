@@ -5,29 +5,49 @@
 {% block body %}
     {% load static %}
     <head>
+      <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/summernote/summernote-bs4.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     </head>
-    <!-- Content Header (Page header) -->
+    <!-- Content Header (page header) -->
+    <body class="hold-transition sidebar-mini layout-fixed">
+
     <div>
         <h1>MJER Iaido membership card</h1>
+        <hr>
     </div>
+            <div class="pcontainer">
+
 
     {% for testee in object_list %}
 
-        <div class="containar">
-            <div>
                 <img src="/media/images/web_member_card.png" />
-                <h2>会 員 証</h2>
-            </div>
-            <div>
-                <p>
-                    {{ testee.status}}
-                </p>
-                    <br>
-                <p>
-                    {{ testee.membership_number}}  {{ testee.testee_name}}
-                </p>
-            </div>
-        </div>
+                <ph2>会 員 証</ph2>
+                <pp><nobr> Status :  {{ testee.status}} </nobr></pp>
+                <ph3><nobr> {{testee.dojo.dojo_name}} </nobr></ph3>
+                <ph4><nobr> {{ testee.membership_number}}   {{ testee.testee_name}} </nobr></ph4>
     {% endfor %}
+            </div>
+
+    </body>
 {% endblock %}

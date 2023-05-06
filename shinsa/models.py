@@ -132,7 +132,7 @@ class Status(models.Model):
         verbose_name='status',
     )
     def __str__(self):
-        return f"{self.status}   : { self.status_eng }"
+        return f"{self.status}   / { self.status_eng }"
 
 
 # 受審者テーブル
