@@ -105,14 +105,6 @@ class TesteeprofileListView(LoginRequiredMixin, ListView):
 class TesteeDetailView(DetailView):
     model = Testee
 
-    # your_profile
-#     def get_queryset(self):
-#         userparam = self.request.GET.get('request.user')
-#         object_list = Testee.objects.filter(
-#                         Q(membership__number='0101999'))
-#         return object_list
-
-
 class TesteeUpdateView(LoginRequiredMixin, UpdateView):
     model = Testee
     fields = [
@@ -195,17 +187,8 @@ class TesteeCreateView(LoginRequiredMixin, CreateView):
         initial["membership_number"] = self.kwargs.get('dojo_number')
         return initial
 
-#    def get_initial(self):
-#        initialDojoNumber = super().get_initial()
-#        initialDojoNumber["membership_number"] = self.kwargs.get('dojo_number')
-#        return initialDojoNumber
-
 class ScoringsheetListView(ListView):
     model = Scoringsheet
-#    def get_context_data(self, **kwargs):
-#        context = super().get_context_data(**kwargs)
-#        context["judge"] = 0
-#        return context
 
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
@@ -219,12 +202,6 @@ class ScoringsheetCreateView(LoginRequiredMixin, CreateView):
     fields = [
         "testee",
         "grade",
-#        "score1",
-#        "score2",
-#        "score3",
-#        "score4",
-#        "score5",
-#        "written_points",
         "events"
         ]
     success_url = reverse_lazy("scoringsheet_form")
@@ -308,10 +285,6 @@ class Scoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
 
 class EmbuscoringsheetListView(ListView):
     model = Embuscoringsheet
-#    def get_context_data(self, **kwargs):
-#        context = super().get_context_data(**kwargs)
-#        context["judge"] = 0
-#        return context
 
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
