@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 #country
 from shinsa.views import CountryListView
@@ -32,6 +35,7 @@ from shinsa.views import TesteeListView
 from shinsa.views import TesteeCreateView
 from shinsa.views import TesteeDetailView
 from shinsa.views import TesteeUpdateView
+from shinsa.views import TesteeprofileListView
 
 # scoringsheet
 from shinsa import views
@@ -53,6 +57,10 @@ from shinsa.views import Embuscoringsheet3UpdateView
 
 urlpatterns = [
     path('', views.index, name="index.html"),
+
+# your_profile
+    path('your_profile', views.your_profile, name="your_profile"),
+
 # weasyprint
     path('exportpdf/shinsa/', views.exportpdf_shinsa, name='exportpdf_shinsa'),
 
@@ -67,6 +75,7 @@ urlpatterns = [
     path('testee', TesteeListView.as_view(), name="testee"),
     path('testee/<int:pk>', TesteeDetailView.as_view(), name="testee_detail"),
     path('testee_update/<int:pk>', TesteeUpdateView.as_view(), name="testee_update"),
+    path('testee_profile', TesteeprofileListView.as_view(), name="testee_profile"),
 
 # Events
     path('events', EventsListView.as_view(), name="events"),
@@ -96,3 +105,6 @@ urlpatterns = [
     path('login', LoginView.as_view(template_name = 'login.html'), name="login"),
     path('logout', LogoutView.as_view(template_name = 'logout.html'), name="logout"),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

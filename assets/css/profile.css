@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap');
+
+.pcontainer{
+    width:60%;
+    height:60%;
+    margin: 5% 20% 5% 20%;
+    position: relative;
+}
+img{
+
+  width:100%;
+  height:auto;
+}
+
+ph1{
+  font-family: 'Yuji Syuku', serif;
+  font-size:200%;
+}
+
+ph2{
+  position: absolute;
+  width:50%;
+  top:35%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size:400%;
+  color: rgb(98, 93, 93);
+  text-align: center;
+  font-family: 'Yuji Syuku', serif;
+}
+
+pp{
+  position: absolute;
+  width:50%;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size:150%;
+  color: rgb(98, 93, 93);
+  text-align: center;
+  font-family: 'Yuji Syuku', serif;
+}
+
+ph3{
+  position: absolute;
+  width:50%;
+  top:60%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size:250%;
+  color: rgb(98, 93, 93);
+  text-align: center;
+  font-family: 'Yuji Syuku', serif;
+}
+
+ph4{
+  position: absolute;
+  width:50%;
+  top:68%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size:200%;
+  color: rgb(98, 93, 93);
+  text-align: center;
+  font-family: 'Yuji Syuku', serif;
+}
+
+ph5{
+  position: absolute;
+  width:50%;
+  top:80%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size:500%;
+  color: rgb(98, 93, 93);
+  text-align: center;
+  font-family: 'Yuji Syuku', serif;
+}

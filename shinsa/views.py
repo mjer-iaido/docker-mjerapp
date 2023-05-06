@@ -35,6 +35,10 @@ import datetime
 def index(request):
     return render(request, 'shinsa/index.html', {})
 
+# your_profile
+def your_profile(request):
+    return render(request, 'shinsa/your_profile.html', {})
+
 # weasyprint --start--
 def exportpdf_shinsa(request):
     from django.template.loader import get_template
@@ -82,6 +86,18 @@ class TesteeListView(LoginRequiredMixin, ListView):
         dojoparam = self.request.GET.get('dojo')
         object_list = Testee.objects.filter(
                         Q(dojo__id=dojoparam))
+        return object_list
+
+    login_url = '/login/'
+
+class TesteeprofileListView(LoginRequiredMixin, ListView):
+    model = Testee
+    template_name = 'shinsa/your_profile.html'
+
+    def get_queryset(self):
+        userparam = self.request.user
+        object_list = Testee.objects.filter(
+                        Q(membership_number=userparam))
         return object_list
 
     login_url = '/login/'
@@ -171,17 +187,8 @@ class TesteeCreateView(LoginRequiredMixin, CreateView):
         initial["membership_number"] = self.kwargs.get('dojo_number')
         return initial
 
-#    def get_initial(self):
-#        initialDojoNumber = super().get_initial()
-#        initialDojoNumber["membership_number"] = self.kwargs.get('dojo_number')
-#        return initialDojoNumber
-
 class ScoringsheetListView(ListView):
     model = Scoringsheet
-#    def get_context_data(self, **kwargs):
-#        context = super().get_context_data(**kwargs)
-#        context["judge"] = 0
-#        return context
 
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
@@ -195,12 +202,6 @@ class ScoringsheetCreateView(LoginRequiredMixin, CreateView):
     fields = [
         "testee",
         "grade",
-#        "score1",
-#        "score2",
-#        "score3",
-#        "score4",
-#        "score5",
-#        "written_points",
         "events"
         ]
     success_url = reverse_lazy("scoringsheet_form")
@@ -284,10 +285,6 @@ class Scoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
 
 class EmbuscoringsheetListView(ListView):
     model = Embuscoringsheet
-#    def get_context_data(self, **kwargs):
-#        context = super().get_context_data(**kwargs)
-#        context["judge"] = 0
-#        return context
 
     def get_queryset(self):
         eventparam = self.request.GET.get('event')
@@ -374,4 +371,3 @@ class Embuscoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
         form.fields['score2'].label = self.kwargs.get('marker2')
         form.fields['score3'].label = self.kwargs.get('marker3')
         return form
-

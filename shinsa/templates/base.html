@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="{% static 'AdminLTE-3.0.2/plugins/summernote/summernote-bs4.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -54,7 +55,7 @@
               <li><a href="admin">Administrator</a></li>
               <li><a href="{% url 'events' %}">Evens List</a></li>
               <li><a href="{% url 'country' %}">Members List</a></li>
-              <li><a href="">Your profile</a></li>
+              <li><a href="{% url 'testee_profile' %}">Your profile</a></li>
           {% endif %}
         </h3>
       </a>
@@ -85,7 +86,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2020-2022 <a >World MJER Iaido Federation</a>.</strong>
+    <strong>Copyright &copy; 2020-2023 <a >World MJER Iaido Federation</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.0.2
