@@ -35,9 +35,9 @@ import datetime
 def index(request):
     return render(request, 'shinsa/index.html', {})
 
-# your_profile
-def your_profile(request):
-    return render(request, 'shinsa/your_profile.html', {})
+# # your_profile
+# def your_profile(request):
+#     return render(request, 'shinsa/your_profile.html', {})
 
 # weasyprint --start--
 def exportpdf_shinsa(request):

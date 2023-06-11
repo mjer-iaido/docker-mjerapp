@@ -58,8 +58,8 @@ from shinsa.views import Embuscoringsheet3UpdateView
 urlpatterns = [
     path('', views.index, name="index.html"),
 
-# your_profile
-    path('your_profile', views.your_profile, name="your_profile"),
+# # your_profile
+#     path('your_profile', views.your_profile, name="your_profile"),
 
 # weasyprint
     path('exportpdf/shinsa/', views.exportpdf_shinsa, name='exportpdf_shinsa'),
