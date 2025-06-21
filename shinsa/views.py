@@ -50,6 +50,7 @@ def exportpdf_shinsa(request):
     pdf_file = HTML(request.GET.get('path')).write_pdf(
         stylesheets=[
             CSS(string='body { font-family: "M PLUS 1p", sans-serif; !important }'),
+            # CSS(string='body { font-family: "Yuji Syuku", serif; !important }'),
         ]
     )
     response = HttpResponse(pdf_file, content_type='application/pdf')
@@ -198,7 +199,8 @@ class ScoringsheetListView(ListView):
 
 class ScoringsheetCreateView(LoginRequiredMixin, CreateView):
     model = Scoringsheet
-    template_name = 'shinsa/scoringsheet_form.html'
+    # form_class = TesteeRegistorationForm
+    template_name = 'shinsa/scoringsheet_form.html'    
     fields = [
         "testee",
         "grade",
