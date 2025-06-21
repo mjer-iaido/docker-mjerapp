@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 # イベントテーブル
