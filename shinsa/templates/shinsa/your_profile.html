@@ -24,6 +24,18 @@
                 <ph5><nobr> {{ testee.testee_name}} </nobr></ph5>
             {% endfor %}
         </div>
-
+        
+        <!-- QRコードセクション -->
+        <div class="qr-container">
+            <div class="qr-section">
+                <h3>会員情報QRコード</h3>
+                {% if qr_code %}
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="会員情報QRコード" style="max-width: 200px; height: auto;" />
+                    <p class="qr-info">このQRコードには会員情報が含まれています</p>
+                {% else %}
+                    <p>QRコードを生成できませんでした</p>
+                {% endif %}
+            </div>
+        </div>
     </body>
 {% endblock %}

@@ -18,6 +18,7 @@ from django.db.models import Q
 
 from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country, Status, Embuscoringsheet
 from .forms import ScoringsheetForm
+from .utils import generate_membership_qr_code
 
 #weasyprint --staticstart--
 from django.template.loader import render_to_string
@@ -100,6 +101,14 @@ class TesteeprofileListView(LoginRequiredMixin, ListView):
         object_list = Testee.objects.filter(
                         Q(membership_number=userparam))
         return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # 最初の会員情報を取得してQRコードを生成
+        if context['object_list']:
+            testee = context['object_list'][0]
+            context['qr_code'] = generate_membership_qr_code(testee)
+        return context
 
     login_url = '/login/'
 
