@@ -102,6 +102,9 @@ urlpatterns = [
     path('embuscoringseet4_update/<str:marker1>/<str:marker2>/<str:marker3>/<str:marker4>/<int:pk>', Embuscoringsheet4UpdateView.as_view(), name="embuscoringsheet4_update"),
     path('embuscoringseet3_update/<str:marker1>/<str:marker2>/<str:marker3>/<int:pk>', Embuscoringsheet3UpdateView.as_view(), name="embuscoringsheet3_update"),
 
+    # AJAX endpoint for testee search used by embuscoringsheet form
+    path('ajax/testee-search/', views.ajax_testee_search, name='ajax_testee_search'),
+
 # Admin
     path('admin/', admin.site.urls),
 

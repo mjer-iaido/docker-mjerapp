@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import reverse
 from django.views.generic import ListView
 from django.views.generic import DetailView
@@ -382,3 +383,56 @@ class Embuscoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
         form.fields['score2'].label = self.kwargs.get('marker2')
         form.fields['score3'].label = self.kwargs.get('marker3')
         return form
+
+
+def ajax_testee_search(request):
+    """AJAX endpoint: return testee list matching query q (searches testee_name and testee_name_eng).
+
+    Normalize the query (NFKC) so half-width/full-width kana and alphanumerics are handled
+    consistently (ユーザーが半角/全角どちらで入力してもマッチするようにする).
+
+    Response JSON format: [{"id": <pk>, "label": "display text"}, ...]
+    """
+    import unicodedata, re
+
+    q = request.GET.get('q', '')
+    q = q.strip()
+    # normalize to NFKC: converts half-width katakana -> full-width, full-width alnum -> ascii, etc.
+    if q:
+        q = unicodedata.normalize('NFKC', q)
+        # convert full-width spaces to ascii space and collapse whitespace
+        q = q.replace('\u3000', ' ')
+        q = re.sub(r"\s+", ' ', q).strip()
+    if not request.user.is_authenticated:
+        # return empty list for anonymous users
+        return JsonResponse([], safe=False)
+
+    if q == '':
+        # avoid returning huge lists; return empty to encourage typing
+        return JsonResponse([], safe=False)
+
+    # We cannot reliably normalize DB strings in SQL across DB engines here,
+    # so fetch a reasonable slice and perform NFKC normalization in Python.
+    # Limit the scan to avoid heavy queries on large datasets.
+    max_scan = 1000
+    max_results = 100
+
+    qs = Testee.objects.select_related('dojo').order_by('membership_number')[:max_scan]
+
+    results = []
+    normalized_q = unicodedata.normalize('NFKC', q).lower()
+
+    for t in qs:
+        name = t.testee_name or ''
+        name_eng = t.testee_name_eng or ''
+        # normalize DB values
+        norm_name = unicodedata.normalize('NFKC', name).lower()
+        norm_name_eng = unicodedata.normalize('NFKC', name_eng).lower()
+
+        if normalized_q in norm_name or normalized_q in norm_name_eng:
+            label = f"{t.membership_number or ''} {t.testee_name} ({t.testee_name_eng}) - {t.dojo.dojo_name}"
+            results.append({"id": t.pk, "label": label})
+            if len(results) >= max_results:
+                break
+
+    return JsonResponse(results, safe=False)

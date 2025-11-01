@@ -17,9 +17,75 @@
                   <h3>得点</h3>
               </th>
           </tr>
-          {{ form }}
+                    {{ form }}
       </table>
       <button class="btn btn-primary" type="submit">送信</button>
       <input type="button" value="戻る" onClick="javascript:history.go(-1);">
   </form>
+{% endblock %}
+
+{% block extrajs %}
+    <script>
+        (function($){
+            $(function(){
+                const select = $('#id_testee');
+                if (!select.length) return; // no testee field on this form
+
+                // store original options so we can restore
+                const originalOptions = select.find('option').map(function(){
+                    return {value: $(this).val(), text: $(this).text(), selected: $(this).is(':selected')};
+                }).get();
+
+                // insert search input above the select
+                const $search = $('<input>',{
+                    id: 'testee-search',
+                    type: 'search',
+                    placeholder: '名前で検索（日本語/英語）',
+                    class: 'form-control',
+                    style: 'margin-bottom:8px; width:50%;'
+                });
+                select.before($search);
+
+                const url = "{% url 'ajax_testee_search' %}";
+
+                let timer = null;
+                $search.on('input', function(){
+                    const q = $(this).val().trim();
+                    clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        if (q === ''){
+                            // restore original options
+                            select.empty();
+                            originalOptions.forEach(function(o){
+                                const opt = $('<option>').val(o.value).text(o.text);
+                                if (o.selected) opt.prop('selected', true);
+                                select.append(opt);
+                            });
+                            return;
+                        }
+
+                        // fetch matches
+                        $.getJSON(url, {q: q}).done(function(data){
+                            select.empty();
+                            if (!data || data.length === 0){
+                                // no hits: leave empty and optionally show a placeholder
+                                select.append($('<option>').text('該当なし').val(''));
+                                return;
+                            }
+
+                            const currentVal = select.val();
+                            data.forEach(function(item){
+                                const opt = $('<option>').val(item.id).text(item.label);
+                                if (String(item.id) === String(currentVal)) opt.prop('selected', true);
+                                select.append(opt);
+                            });
+                        }).fail(function(){
+                            // on error, do nothing (keep current list)
+                        });
+                    }, 300);
+                });
+
+            });
+        })(jQuery);
+    </script>
 {% endblock %}
